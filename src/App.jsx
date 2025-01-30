@@ -10,7 +10,15 @@ import Track from './components/Track/Track';
 
   
 function App() {
-  const [searchResults, setSearchResults] = useState([]);
+  // Step 1: Initialize searchResults with hardcoded track data
+  const [searchResults, setSearchResults] = useState([
+    { id: 1, name: "Blinding Lights", artist: "The Weeknd", album: "After Hours" },
+    { id: 2, name: "Watermelon Sugar", artist: "Harry Styles", album: "Fine Line" },
+    { id: 3, name: "Levitating", artist: "Dua Lipa", album: "Future Nostalgia" }
+  ]);
+
+
+
   const [playlist, setPlaylist] = useState([]);
 
   // Handle search functionality

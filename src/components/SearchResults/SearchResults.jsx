@@ -20,4 +20,3 @@ function SearchResults({ results }) {
 }
 
 export default SearchResults; // Exporting SearchResults component for use elsewhere
-

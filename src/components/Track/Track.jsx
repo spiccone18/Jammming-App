@@ -3,10 +3,11 @@ import styles from './Track.module.css'; // Corrected the import for the CSS mod
 function Track({ track }) {
   return (
     <div className={styles.track}> {/* Use the correct CSS class from the module */}
-      <p>{track.name} - {track.artist}</p>
+      <p>{track.name} - {track.artist} | {track.album}</p> {/* Added album */}
     </div>
   );
 }
 
 export default Track;
+
 
