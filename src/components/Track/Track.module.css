@@ -1,0 +1,13 @@
+.track { 
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.track:hover {
+  background-color: #e8e8e8;
+}
+
+  
