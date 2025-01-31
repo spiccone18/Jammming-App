@@ -1,22 +1,27 @@
-import Track from '../Track/Track'; // Import the Track component
-import styles from './Tracklist.module.css'; // Import the CSS module as 'styles'
+import Track from '../Track/Track';
+import styles from './Tracklist.module.css';
 
-// The Tracklist component receives a 'tracks' prop to display a list of tracks
-function Tracklist({ tracks }) {
+function Tracklist({ tracks, onAdd, onRemove, isRemoval }) {
   return (
     <div className={styles.tracklist}>
-      <h3>Tracklist</h3>
       <ul>
         {tracks.map((track) => (
-          // Render Track component for each track
-          <Track key={track.id} track={track} />
+          <Track 
+            key={track.id} 
+            track={track} 
+            onAdd={onAdd} 
+            onRemove={onRemove} 
+            isRemoval={isRemoval} 
+          />
         ))}
       </ul>
     </div>
   );
 }
 
-export default Tracklist; // Export the Tracklist component for use elsewhere
+export default Tracklist;
+
+
 
 
 

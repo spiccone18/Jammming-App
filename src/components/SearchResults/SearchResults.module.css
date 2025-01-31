@@ -3,34 +3,73 @@
     flex-wrap: wrap;
     justify-content: space-around;
     margin-top: 20px;
-}
-
-.searchResults .track { /* The .track class inside searchResults */
+  }
+  
+  .searchResults .track { /* The .track class inside searchResults */
     width: 250px;
     margin: 10px;
     padding: 15px;
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: #f4f4f4;
-}
-
-.searchResults .track:hover { /* Hover effect for .track */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative; /* Add position relative to help position the button */
+  }
+  
+  .searchResults .track:hover { /* Hover effect for .track */
     background-color: #e8e8e8;
-}
-
-.track img { /* Styling for images inside .track */
+  }
+  
+  .track img { /* Styling for images inside .track */
     width: 100%;
     border-radius: 10px;
-}
-
-.track h3 { /* Styling for track titles */
+    margin-bottom: 10px;
+  }
+  
+  .track h3 { /* Styling for track titles */
     font-size: 18px;
     margin-top: 10px;
-}
-
-.track p { /* Styling for track artist names */
+  }
+  
+  .track p { /* Styling for track artist names */
     font-size: 14px;
     color: gray;
-}
+    margin-bottom: 10px;
+  }
+  
+  .addButton { /* Styling for the 'Add' button */
+    padding: 8px 12px;
+    font-size: 16px;
+    color: white;
+    background-color: #28a745; /* Green color for the button */
+    border: none;
+    border-radius: 50%; /* Change to make it circular */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 40px; /* Set fixed width for circular button */
+    height: 40px; /* Set fixed height for circular button */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the "+" sign inside */
+    position: absolute; /* Position the button at the bottom */
+    bottom: 15px;
+  }
+  
+  .addButton:hover { /* Hover effect for 'Add' button */
+    background-color: #218838; /* Darker green for hover effect */
+  }
+  
+  .addButton:focus { /* Remove default focus outline */
+    outline: none;
+  }
+  
+  .addButton:active { /* Active state for button */
+    background-color: #1e7e34;
+  }
+  
+  
 
   

@@ -1,22 +1,27 @@
-import Track from '../Track/Track'; // Importing the Track component
-import styles from './SearchResults.module.css'; // Importing styles from the CSS module
+import React from 'react';
+import styles from './SearchResults.module.css'; // Adjust the import to match your setup
 
-// The SearchResults component takes the 'results' prop to display search results
-function SearchResults({ results }) {
+function SearchResults({ results, onAdd }) {
   return (
-    <div className={styles.searchResults}> {/* Use 'styles.searchResults' to apply the correct CSS class */}
-      <h2>Search Results</h2>
-      {results.length === 0 ? (
-        <p>No results found</p> // If no results, show a message
-      ) : (
-        <ul>
-          {results.map((track) => (
-            <Track key={track.id} track={track} /> // For each track, render a Track component
-          ))}
-        </ul>
-      )}
+    <div className={styles.searchResults}>
+      {results.map((track) => (
+        <div key={track.id} className={styles.track}>
+          <img src={track.albumArt} alt={track.name} /> {/* Assuming you have album art */}
+          <h3>{track.name}</h3>
+          <p>{track.artist} - {track.album}</p>
+          {/* Button for adding track to the playlist */}
+          <button 
+            className={styles.addButton} 
+            onClick={() => onAdd(track)}
+          >
+            +
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
 
-export default SearchResults; // Exporting SearchResults component for use elsewhere
+export default SearchResults;
+
+

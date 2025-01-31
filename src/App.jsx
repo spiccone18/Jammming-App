@@ -1,37 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import SearchResults from './components/SearchResults/SearchResults';
 import Playlist from './components/Playlist/Playlist';
-import Tracklist from './components/Tracklist/Tracklist';
-import Track from './components/Track/Track';
 
-  
 function App() {
-  // Step 1: Initialize searchResults with hardcoded track data
+  // 🔹 Search results (mock data for now)
   const [searchResults, setSearchResults] = useState([
     { id: 1, name: "Blinding Lights", artist: "The Weeknd", album: "After Hours" },
     { id: 2, name: "Watermelon Sugar", artist: "Harry Styles", album: "Fine Line" },
     { id: 3, name: "Levitating", artist: "Dua Lipa", album: "Future Nostalgia" }
   ]);
 
+  // 🔹 Playlist name
+  const [playlistName, setPlaylistName] = useState("My Playlist");
 
+  // 🔹 Tracks in the playlist
+  const [playlistTracks, setPlaylistTracks] = useState([]);
 
-  const [playlist, setPlaylist] = useState([]);
-
-  // Handle search functionality
-  const handleSearch = async (searchTerm) => {
-    // Fetch search results from the Spotify API here
-    const results = await fetchSearchResults(searchTerm);
-    setSearchResults(results);
+  // 🎵 Add track to playlist (prevent duplicates)
+  const addTrackToPlaylist = (track) => {
+    if (!playlistTracks.some(existingTrack => existingTrack.id === track.id)) {
+      setPlaylistTracks([...playlistTracks, track]);
+    }
   };
 
-  // Save the playlist to the user's Spotify account
-  const handleSaveToSpotify = async () => {
-    // Call Spotify API to save playlist
-    console.log('Saving to Spotify...');
+  // ❌ Remove track from playlist
+  const removeTrackFromPlaylist = (trackId) => {
+    setPlaylistTracks(playlistTracks.filter(track => track.id !== trackId));
+  };
+
+  // ✏️ Update playlist name
+  const updatePlaylistName = (name) => {
+    setPlaylistName(name);
+  };
+
+  // 🔄 Mock search function (replace with API later)
+  const handleSearch = async (searchTerm) => {
+    console.log(`Searching for: ${searchTerm}`);
+    // Replace this with Spotify API call later
+    setSearchResults([
+      { id: 4, name: "Song 4", artist: "Artist 4", album: "Album 4" },
+      { id: 5, name: "Song 5", artist: "Artist 5", album: "Album 5" },
+    ]);
+  };
+
+  // 🚀 Save playlist to Spotify (API integration later)
+  const handleSaveToSpotify = () => {
+    console.log(`Saving playlist: ${playlistName} with tracks:`, playlistTracks);
   };
 
   return (
@@ -39,21 +55,21 @@ function App() {
       <header className="App-header">
         <h1>Jammming</h1>
       </header>
+
       <SearchBar onSearch={handleSearch} />
-      <SearchResults results={searchResults} />
-      <Playlist playlist={playlist} />
+      <SearchResults results={searchResults} onAdd={addTrackToPlaylist} />
+
+      <Playlist 
+        playlistName={playlistName} 
+        playlistTracks={playlistTracks} 
+        onNameChange={updatePlaylistName}
+        onRemove={removeTrackFromPlaylist}
+      />
+
       <button onClick={handleSaveToSpotify}>Save to Spotify</button>
     </div>
   );
 }
 
-// Mock API function
-const fetchSearchResults = async (searchTerm) => {
-  // Replace with actual Spotify API fetch logic
-  return [
-    { id: 1, name: 'Song 1', artist: 'Artist 1' },
-    { id: 2, name: 'Song 2', artist: 'Artist 2' },
-  ];
-};
-
 export default App;
+

@@ -1,14 +1,32 @@
-import Tracklist from '../Tracklist/Tracklist'; // Import the Tracklist component
-import styles from './Playlist.module.css'; // Import the CSS module as 'styles'
+import React from 'react';
+import styles from './Playlist.module.css'; // Adjust the import to match your setup
 
-// The Playlist component receives a 'playlist' prop to display the list of tracks
-function Playlist({ playlist }) {
+function Playlist({ playlistName, playlistTracks, onNameChange, onRemove }) {
   return (
-    <div className={styles.playlist}> {/* Use 'styles.playlist' to apply the correct CSS class */}
-      <h2>Your Playlist</h2>
-      <Tracklist tracks={playlist} /> {/* Render Tracklist component passing the playlist */}
+    <div className={styles.playlist}>
+      <h2>{playlistName}</h2>
+
+      {/* Playlist tracks */}
+      {playlistTracks.map((track) => (
+        <div key={track.id} className={styles.track}>
+          <img src={track.albumArt} alt={track.name} /> {/* Assuming you have album art */}
+          <h3>{track.name}</h3>
+          <p>{track.artist} - {track.album}</p>
+
+          {/* Button to remove track */}
+          <button
+            className={styles.removeButton}
+            onClick={() => onRemove(track.id)} // Trigger remove function
+          >
+            -
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
 
-export default Playlist; // Export the Playlist component for use elsewhere
+export default Playlist;
+
+
+
