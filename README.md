@@ -1,4 +1,4 @@
-#Jamming App 
+# Jamming App 
 
 This is a React web app that lets users search Spotify and create their own custom playlists and then save it to their spotify account. It uses the Spotify API and  provides a better UI and method than simply searching for songs and adding them to playlist within the mobile app which can be time consuming and not intuitive.
 
