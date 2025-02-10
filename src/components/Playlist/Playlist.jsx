@@ -1,32 +1,30 @@
 import React from 'react';
-import styles from './Playlist.module.css'; // Adjust the import to match your setup
+import './Playlist.module.css';
 
 function Playlist({ playlistName, playlistTracks, onNameChange, onRemove }) {
   return (
-    <div className={styles.playlist}>
-      <h2>{playlistName}</h2>
+    <div className="Playlist">
+      {/* ✏️ Editable Playlist Name */}
+      <input 
+        type="text" 
+        value={playlistName} 
+        onChange={(e) => onNameChange(e.target.value)} 
+        className="Playlist-name"
+      />
 
-      {/* Playlist tracks */}
-      {playlistTracks.map((track) => (
-        <div key={track.id} className={styles.track}>
-          <img src={track.albumArt} alt={track.name} /> {/* Assuming you have album art */}
-          <h3>{track.name}</h3>
-          <p>{track.artist} - {track.album}</p>
-
-          {/* Button to remove track */}
-          <button
-            className={styles.removeButton}
-            onClick={() => onRemove(track.id)} // Trigger remove function
-          >
-            -
-          </button>
-        </div>
-      ))}
+      {/* 🎵 List of Tracks in Playlist */}
+      <ul>
+        {playlistTracks.map(track => (
+          <li key={track.id}>
+            <div className="track-info">
+              <strong>{track.name}</strong> - {track.artist} ({track.album})
+            </div>
+            <button onClick={() => onRemove(track.id)}>Remove</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
 export default Playlist;
-
-
-

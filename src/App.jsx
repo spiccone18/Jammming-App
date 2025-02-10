@@ -1,18 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import SearchResults from './components/SearchResults/SearchResults';
 import Playlist from './components/Playlist/Playlist';
 
 function App() {
-  // 🔹 Search results (mock data for now)
-  const [searchResults, setSearchResults] = useState([
-    { id: 1, name: "Blinding Lights", artist: "The Weeknd", album: "After Hours" },
-    { id: 2, name: "Watermelon Sugar", artist: "Harry Styles", album: "Fine Line" },
-    { id: 3, name: "Levitating", artist: "Dua Lipa", album: "Future Nostalgia" }
-  ]);
+  // 🔹 Search results (empty for now)
+  const [searchResults, setSearchResults] = useState([]);
 
-  // 🔹 Playlist name
+  // 🔹 Playlist name (editable)
   const [playlistName, setPlaylistName] = useState("My Playlist");
 
   // 🔹 Tracks in the playlist
@@ -30,24 +26,67 @@ function App() {
     setPlaylistTracks(playlistTracks.filter(track => track.id !== trackId));
   };
 
-  // ✏️ Update playlist name
+  // ✏️ Update playlist name (controlled input)
   const updatePlaylistName = (name) => {
     setPlaylistName(name);
   };
 
-  // 🔄 Mock search function (replace with API later)
+  // 🔄 Search functionality with Spotify API
   const handleSearch = async (searchTerm) => {
-    console.log(`Searching for: ${searchTerm}`);
-    // Replace this with Spotify API call later
-    setSearchResults([
-      { id: 4, name: "Song 4", artist: "Artist 4", album: "Album 4" },
-      { id: 5, name: "Song 5", artist: "Artist 5", album: "Album 5" },
-    ]);
+    const accessToken = localStorage.getItem("spotifyToken"); // Retrieve token
+    const searchUrl = `https://api.spotify.com/v1/search?type=track&q=${searchTerm}`;
+
+    try {
+      const response = await fetch(searchUrl, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (!response.ok) throw new Error('Failed to fetch');
+
+      const data = await response.json();
+
+      const tracks = data.tracks.items.map(track => ({
+        id: track.id,
+        name: track.name,
+        artist: track.artists[0].name,
+        album: track.album.name,
+        uri: track.uri,
+      }));
+      setSearchResults(tracks);
+    } catch (error) {
+      console.error("Error during search:", error);
+    }
   };
 
-  // 🚀 Save playlist to Spotify (API integration later)
+  // 🚀 Save playlist to Spotify (mock functionality)
   const handleSaveToSpotify = () => {
-    console.log(`Saving playlist: ${playlistName} with tracks:`, playlistTracks);
+    if (!playlistTracks.length) {
+      console.log("Playlist is empty. Nothing to save.");
+      return;
+    }
+
+    const trackURIs = playlistTracks.map(track => track.uri || "No URI Available");
+
+    console.log(`Saving playlist: ${playlistName}`);
+    console.log("Track URIs:", trackURIs);
+
+    // Reset the playlist after saving
+    setPlaylistName("New Playlist");
+    setPlaylistTracks([]);
+  };
+
+  // Redirect to Spotify for authorization
+  const redirectToSpotify = () => {
+    const clientId = "c5af055a59354fb7a39fbd57d36239ad";
+    const redirectUri = "http://localhost:5173/";
+    const scope = "playlist-modify-public playlist-modify-private";
+    const state = Math.random().toString(36).substring(7); // Generate a random string for security
+  
+    const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scope}&state=${state}`;
+    
+    window.location = authUrl; // Redirect user to Spotify's login page
   };
 
   return (
@@ -67,9 +106,15 @@ function App() {
       />
 
       <button onClick={handleSaveToSpotify}>Save to Spotify</button>
+      <button onClick={redirectToSpotify}>Login to Spotify</button>
+
     </div>
   );
 }
 
 export default App;
+
+
+
+
 

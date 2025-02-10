@@ -5,7 +5,7 @@ function Track({ track, onAdd, onRemove, isRemoval }) {
   // Function to handle adding/removing a track
   const handleClick = () => {
     if (isRemoval) {
-      onRemove(track); // Remove track if in Playlist view
+      onRemove(track.id); // Remove track if in Playlist view
     } else {
       onAdd(track); // Add track if in SearchResults view
     }
